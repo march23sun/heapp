@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <link href="./css/googleFonts.css" rel="stylesheet" />
+    <link href="./css/materialdesignicons.min.css" rel="stylesheet" />
+    <link href="./css/vuetify.min.css" rel="stylesheet" />
+    <link href="./css/style.css" rel="stylesheet" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
+    />
+    <title>HEHE</title>
+    <!-- broswer -->
+    <script src="./js/polyfill.min.js"></script>
+    <script src="./js/babel.min.js"></script>
+    <script src="./js/browser-polyfill.min.js"></script>
+    <script src="./js/moment.js"></script>
+    <script src="./js/papaparse.min.js"></script>
+    <script src="./js/iconv-lite.js"></script>
+    <!-- vue -->
+    <script src="./js/vue.js"></script>
+    <script src="./js/axios.min.js"></script>
+    <script>
+      Vue.prototype.$formatNumber = function (num) {
+        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+      };
+      Vue.prototype.$moment = moment;
+      moment.locale("zh-tw");
+
+      if (location.search.includes("debug=1")) debug();
+
+      function debug() {
+        var cssNode = document.createElement("script");
+        cssNode.setAttribute("type", "text/javascript");
+        cssNode.setAttribute("src", "./js/vconsole.min.js");
+        if (typeof cssNode != "undefined")
+          document.getElementsByTagName("head")[0].appendChild(cssNode);
+      }
+      var BASE_URL = "";
+    </script>
+  </head>
+
+  <body>
+    <div id="app" v-show="isMounted" style="display: none">
+      <v-app>
+        <v-fab-transition v-if="$route.meta.goTop">
+          <v-btn
+            v-scroll="onScroll"
+            v-show="fab"
+            @click="toTop"
+            fab
+            dark
+            fixed
+            bottom
+            right
+            style="background-color: #44af69"
+          >
+            <i class="v-icon mdi mdi-chevron-up"></i>
+          </v-btn>
+        </v-fab-transition>
+
+        <router-view></router-view>
+      </v-app>
+
+      <p
+        @click="debug"
+        style="text-align: center; color: #ddd; padding: 10px; font-size: 12px"
+      >
+        v1.1.0
+      </p>
+    </div>
+    <!-- utils -->
+    <script type="text/babel" src="./js/utils.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.20.1/moment.min.js"></script>
+    <script src="https://unpkg.com/vee-validate@2.0.0-rc.25/dist/vee-validate.js"></script> -->
+    <script src="./js/httpVueLoader.js"></script>
+    <script src="./js/vue-router.js"></script>
+    <script src="./js/vuetify.min.js"></script>
+    <!-- <script src="./js/vconsole.min.js"></script> -->
+    <script src="./js/chart.js"></script>
+    <script src="./js/chartjs-plugin-datalabels.js"></script>
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css"
+    />
+    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+    <!-- vue-router -->
+    <script type="text/babel" src="./js/route.js"></script>
+
+    <script type="text/babel">
+      // Vue.use(VeeValidate);
+
+      var app = new Vue({
+        el: "#app",
+        watch: {},
+        mounted: function () {
+          this.isMounted = true;
+        },
+        data: {
+          isMounted: false,
+          fab: false,
+        },
+        methods: {
+          debug: window.debug,
+          onScroll(e) {
+            if (typeof window === "undefined") return;
+            const top = window.pageYOffset || e.target.scrollTop || 0;
+            this.fab = top > 20;
+          },
+          toTop() {
+            window.scrollTo({
+              top: 0,
+              left: 0,
+              behavior: "smooth",
+            });
+          },
+        },
+        vuetify: new Vuetify(),
+        router: router,
+      });
+    </script>
+  </body>
+</html>
