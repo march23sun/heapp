@@ -14,7 +14,7 @@ const routes = [
 
 let router = new VueRouter({
   base: "/heapp",
-  mode: "history",
+  mode: "hash",
   routes: routes, // short for `routes: routes`
 });
 
