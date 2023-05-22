@@ -3,6 +3,10 @@ Vue.use(VueRouter);
 
 const routes = [
   {
+    path: "/",
+    component: httpVueLoader("./page/class.vue"),
+  },
+  {
     path: "/class",
     component: httpVueLoader("./page/class.vue"),
   },
@@ -13,7 +17,7 @@ const routes = [
 ];
 
 let router = new VueRouter({
-  base: "/heapp",
+  base: "/heapp/",
   mode: "hash",
   routes: routes, // short for `routes: routes`
 });
